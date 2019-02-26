@@ -67,7 +67,7 @@ requirements:
 
             def create_new_project(syn, sub):
                 project = synapseclient.Project(
-                        "Wellcome MAP Archive - Submission {}".format(sub["id"]),
+                        "Wellcome Surveillance Archive - Submission {}".format(sub["id"]),
                         annotations = {"source": sub["entityId"],
                                        "submissionId": sub["id"],
                                        "createdOn": time.time()})
@@ -77,7 +77,8 @@ requirements:
             def archive_project(syn, source, dest, grant_permissions_to = []):
                 with suppress_stdout():
                     synapseutils.copy(syn, entity = source, destinationId = dest)
-                grant_permissions_to.append(3377737) # Wellcome Data Re-Use Prize - Malaria Admin
+                grant_permissions_to.append(3379094) # Wellcome Data Re-Use Prize - Surveillance Admin
+                grant_permissions_to.append(3380381) # Wellcome Curators
                 for i in grant_permissions_to:
                     syn.setPermissions(
                             entity = dest,

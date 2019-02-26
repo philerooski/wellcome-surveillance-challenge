@@ -51,7 +51,7 @@ requirements:
                 invalid_reasons = []
                 required_headers = [
                     "Introduction", "Methods", "Identification of Novel Findings",
-                    "Innovation of Approach", "Replication of Findings", "Code",
+                    "Innovation of Approach", "Robustness of Methods",
                     "Collaboration", "New Pair-Wise Collaborations"]
                 if markdown is None:
                     invalid_reasons.append("Submission is not a Synapse project.")
@@ -66,7 +66,7 @@ requirements:
                                            "terminated by a newline ('\\n') "
                                            "within the raw markdown and/or "
                                            "use the provided template "
-                                           "(syn17022214).".format(", ".join(missing_headers)))
+                                           "(syn17024264).".format(", ".join(missing_headers)))
                     return invalid_reasons
                 for i in range(len(required_headers)):
                     if required_headers[i] != found_headers[i]:
@@ -111,7 +111,7 @@ requirements:
                     invalid_reasons = validate_submission(wiki_markdown)
                 except synapseclient.exceptions.SynapseHTTPError:
                     invalid_reasons = ["A wiki does not exist for this project. ",
-                                       "Please use the template syn17022214 "
+                                       "Please use the template syn17024264 "
                                        "as the root wiki page."]
                 if len(invalid_reasons):
                     result = {'validation_errors':"\n".join(invalid_reasons),

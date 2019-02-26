@@ -74,7 +74,7 @@ requirements:
                              "Your submission ({}) is valid!\n\n".format(sub.name),
                              "A snapshot of the project has been archived "
                              "at {}.\n\n".format(archive),
-                             "\nSincerely,\nWellcome MAP Challenge Administrator"]
+                             "\nSincerely,\nWellcome Surveillance Challenge Administrator"]
               else:
                   subject = "Submission to {} invalid".format(evaluation.name)
                   message = ["Hello {},\n\n".format(
@@ -82,7 +82,7 @@ requirements:
                              "Your submission ({}) is invalid, below are the "
                              "invalid reasons:\n\n".format(sub.name),
                              invalid_reasons,
-                             "\n\nSincerely,\nWellcome MAP Challenge Administrator"]
+                             "\n\nSincerely,\nWellcome Surveillance Challenge Administrator"]
               syn.sendMessage(
                 userIds=[user_id],
                 messageSubject=subject,
