@@ -126,6 +126,9 @@ requirements:
                     invalid_reasons = ["A wiki does not exist for this project. ",
                                        "Please use the template syn17024264 "
                                        "as the root wiki page."]
+
+                invalid_reasons += check_permissions(syn, sub)
+                
                 if len(invalid_reasons):
                     result = {'validation_errors':"\n".join(invalid_reasons),
                               'status':"INVALID"}
