@@ -108,9 +108,9 @@ requirements:
                 try:
                     perms = syn.getPermissions(project_id, 3385462)
                     if "READ" not in perms and "DOWNLOAD" not in perms:
-                        invalid_reasons.append("The evaluation panel team cannot read the project.")
+                        invalid_reasons.append("The Wellcome Data Re-use Prize - Surveillance Evaluation Panel team cannot read the project.")
                 except synapseclient.exceptions.SynapseHTTPError as e:
-                    invalid_reasons.append("The evaluation panel team cannot read the project.")
+                    invalid_reasons.append("The Wellcome Data Re-use Prize - Surveillance Evaluation Panel team cannot read the project.")
 
                 return invalid_reasons
             
