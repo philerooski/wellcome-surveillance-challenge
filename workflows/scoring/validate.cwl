@@ -68,13 +68,6 @@ requirements:
                                            "use the provided template "
                                            "(syn17024264).".format(", ".join(missing_headers)))
                     return invalid_reasons
-
-                try:
-                    perms = syn.getPermissions(projectId, 3380061)
-                    if "READ" not in perms:
-                        invalid_reasons.append("User 'wellcomeprize' cannot read the project.")
-                except synapseclient.exceptions.SynapseHTTPError as e:
-                    invalid_reasons.append("User 'wellcomeprize' cannot read the project.")
                     
                 for i in range(len(required_headers)):
                     if required_headers[i] != found_headers[i]:
@@ -107,7 +100,19 @@ requirements:
                     return wiki['markdown']
                 else:
                     return None
+            
+            def check_permissions(syn, sub):
+                invalid_reasons = []
+                project_id = sub['entityId']
 
+                try:
+                    perms = syn.getPermissions(project_id, 3380061)
+                    if "READ" not in perms:
+                        invalid_reasons.append("User 'wellcomeprize' cannot read the project.")
+                except synapseclient.exceptions.SynapseHTTPError as e:
+                    invalid_reasons.append("User 'wellcomeprize' cannot read the project.")
+
+                return invalid_reasons
             def main():
                 args = read_args()
                 syn = synapseclient.Synapse(configPath=args.synapse_config)
