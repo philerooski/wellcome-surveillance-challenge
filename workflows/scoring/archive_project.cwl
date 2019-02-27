@@ -79,6 +79,7 @@ requirements:
                     synapseutils.copy(syn, entity = source, destinationId = dest)
                 grant_permissions_to.append(3379094) # Wellcome Data Re-Use Prize - Surveillance Admin
                 grant_permissions_to.append(3380381) # Wellcome Curators
+                grant_permissions_to.append(3385462) # Wellcome Data Re-use Prize - Surveillance Evaluation Panel
                 for i in grant_permissions_to:
                     syn.setPermissions(
                             entity = dest,
