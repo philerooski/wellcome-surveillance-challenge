@@ -106,28 +106,36 @@ requirements:
                 project_id = sub['entityId']
 
                 try:
-                    perms = syn.getPermissions(project_id, 3380061)
-                    if "READ" not in perms:
-                        invalid_reasons.append("User 'wellcomeprize' cannot read the project.")
+                    perms = syn.getPermissions(project_id, 3385462)
+                    if "READ" not in perms and "DOWNLOAD" not in perms:
+                        invalid_reasons.append("The evaluation panel team cannot read the project.")
                 except synapseclient.exceptions.SynapseHTTPError as e:
-                    invalid_reasons.append("User 'wellcomeprize' cannot read the project.")
+                    invalid_reasons.append("The evaluation panel team cannot read the project.")
 
                 return invalid_reasons
+            
             def main():
                 args = read_args()
                 syn = synapseclient.Synapse(configPath=args.synapse_config)
                 syn.login()
                 sub = syn.getSubmission(args.submission_id,
                                         downloadLocation=".")
-                try:
-                    wiki_markdown = get_wiki_markdown(syn, sub)
-                    invalid_reasons = validate_submission(wiki_markdown)
-                except synapseclient.exceptions.SynapseHTTPError:
-                    invalid_reasons = ["A wiki does not exist for this project. ",
-                                       "Please use the template syn17024264 "
-                                       "as the root wiki page."]
 
+                invalid_reasons = []
+                
                 invalid_reasons += check_permissions(syn, sub)
+
+                if len(invalid_reasons):
+                    pass
+                else:
+                    try:
+                        wiki_markdown = get_wiki_markdown(syn, sub)
+                        invalid_reasons = validate_submission(wiki_markdown)
+                    except synapseclient.exceptions.SynapseHTTPError:
+                        invalid_reasons = ["A wiki does not exist for this project. ",
+                                           "Please use the template syn17024264 "
+                                           "as the root wiki page."]
+
                 
                 if len(invalid_reasons):
                     result = {'validation_errors':"\n".join(invalid_reasons),
