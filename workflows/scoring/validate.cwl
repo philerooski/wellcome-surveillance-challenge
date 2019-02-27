@@ -68,6 +68,14 @@ requirements:
                                            "use the provided template "
                                            "(syn17024264).".format(", ".join(missing_headers)))
                     return invalid_reasons
+
+                try:
+                    perms = syn.getPermissions(projectId, 3380061)
+                    if "READ" not in perms:
+                        invalid_reasons.append("User 'wellcomeprize' cannot read the project.")
+                except synapseclient.exceptions.SynapseHTTPError as e:
+                    invalid_reasons.append("User 'wellcomeprize' cannot read the project.")
+                    
                 for i in range(len(required_headers)):
                     if required_headers[i] != found_headers[i]:
                         if i == 0:
