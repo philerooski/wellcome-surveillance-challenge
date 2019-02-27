@@ -106,12 +106,12 @@ requirements:
                 project_id = sub['entityId']
 
                 try:
-                    perms = syn.getPermissions(project_id, 3385462)
+                    perms = syn.getPermissions(project_id, 3380061)
                     if "READ" not in perms and "DOWNLOAD" not in perms:
-                        invalid_reasons.append("The Wellcome Data Re-use Prize - Surveillance Evaluation Panel team cannot read the project.")
+                        invalid_reasons.append("The 'wellcomeprize' user cannot read the project. Please change the sharing settings to 'download' for user 'wellcomeprize' on your project.")
                 except synapseclient.exceptions.SynapseHTTPError as e:
-                    invalid_reasons.append("The Wellcome Data Re-use Prize - Surveillance Evaluation Panel team cannot read the project.")
-
+                    invalid_reasons.append("The 'wellcomeprize' user cannot read the project. Please change the sharing settings to 'download' for user 'wellcomeprize' on your project.")
+                
                 return invalid_reasons
             
             def main():
