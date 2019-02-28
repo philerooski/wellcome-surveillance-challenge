@@ -87,11 +87,17 @@ requirements:
                             accessType =  ["READ", "DOWNLOAD"],
                             overwrite = False)
 
+            def update_status(syn, submission_id, status):
+                status_obj = syn.getSubmissionStatus(submission_id)
+                status_obj["status"] = status
+                syn.store(status_obj)
+
             def main():
                 args = read_args()
+                syn = synapseclient.Synapse(configPath=args.synapse_config)
+                syn.login(silent = True)
+                update_status(syn, args.submission_id, args.status)
                 if args.status == "VALIDATED":
-                    syn = synapseclient.Synapse(configPath=args.synapse_config)
-                    syn.login(silent = True)
                     sub = syn.getSubmission(args.submission_id)
                     new_project = create_new_project(syn, sub)
                     give_read_permissions = sub['teamId'] if 'teamId' in sub else sub['userId']
@@ -99,12 +105,12 @@ requirements:
                                     source = sub['entityId'],
                                     dest = new_project['id'],
                                     grant_permissions_to = [int(give_read_permissions)])
+                    update_status(syn, args.submission_id, status="SCORED")
                     with open(args.results, "w") as o:
                         o.write(json.dumps({"synapseId": new_project["id"]}))
                 else:
                     with open(args.results, "w") as o:
                         o.write(json.dumps({"synapseId": "null"}))
-
 
             if __name__ == "__main__":
                 main()
