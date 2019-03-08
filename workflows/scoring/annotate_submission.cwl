@@ -177,7 +177,7 @@ requirements:
               syn = sc.Synapse(configPath=args.synapse_config)
               syn.login()
               annotation_values = {'archive': args.archive,
-                                   'status': args.status,
+                                   # 'status': args.status,
                                    'invalid_reasons': args.invalid_reasons}
               _with_retry(lambda: annotate_submission(
                                 syn, args.submissionid, annotation_values,

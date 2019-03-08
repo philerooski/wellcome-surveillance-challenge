@@ -87,12 +87,28 @@ requirements:
                             accessType =  ["READ", "DOWNLOAD"],
                             overwrite = False)
 
+            def can_download(syn, sub):
+                project_id = sub['entityId']
+                try:
+                    perms = syn.getPermissions(project_id, 3380061)
+                    if "READ" not in perms and "DOWNLOAD" not in perms:
+                        return False 
+                except synapseclient.exceptions.SynapseHTTPError as e:
+                    return False 
+                return True
+
+            def update_status(syn, submission_id, status):
+                status_obj = syn.getSubmissionStatus(submission_id)
+                status_obj["status"] = status
+                syn.store(status_obj)
+
             def main():
                 args = read_args()
-                if args.status == "VALIDATED":
-                    syn = synapseclient.Synapse(configPath=args.synapse_config)
-                    syn.login(silent = True)
-                    sub = syn.getSubmission(args.submission_id)
+                syn = synapseclient.Synapse(configPath=args.synapse_config)
+                syn.login(silent = True)
+                update_status(syn, args.submission_id, args.status)
+                sub = syn.getSubmission(args.submission_id)
+                if can_download(syn, sub):
                     new_project = create_new_project(syn, sub)
                     give_read_permissions = sub['teamId'] if 'teamId' in sub else sub['userId']
                     archive_project(syn,
@@ -104,7 +120,7 @@ requirements:
                 else:
                     with open(args.results, "w") as o:
                         o.write(json.dumps({"synapseId": "null"}))
-
+                    
 
             if __name__ == "__main__":
                 main()

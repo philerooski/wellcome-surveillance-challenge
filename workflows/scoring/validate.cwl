@@ -68,22 +68,21 @@ requirements:
                                            "use the provided template "
                                            "(syn17024264).".format(", ".join(missing_headers)))
                     return invalid_reasons
-                    
-                for i in range(len(required_headers)):
-                    if required_headers[i] != found_headers[i]:
-                        if i == 0:
-                            invalid_reasons.append(
-                                    "Headers are in the incorrect order. "
-                                    "The first header should be '{}' but found "
-                                    "'{}'".format(required_headers[i], found_headers[i]))
-                        elif i > 0:
-                            invalid_reasons.append(
-                                    "Headers are in the incorrect order. "
-                                    "Expected header '{}' after header '{}' "
-                                    "but found header '{}'".format(
-                                        required_headers[i], required_headers[i-1],
-                                        found_headers[i]))
-                        return invalid_reasons
+                #for i in range(len(required_headers)):
+                #    if required_headers[i] != found_headers[i]:
+                #        if i == 0:
+                #            invalid_reasons.append(
+                #                    "Headers are in the incorrect order. "
+                #                    "The first header should be '{}' but found "
+                #                    "'{}'".format(required_headers[i], found_headers[i]))
+                #        elif i > 0:
+                #            invalid_reasons.append(
+                #                    "Headers are in the incorrect order. "
+                #                    "Expected header '{}' after header '{}' "
+                #                    "but found header '{}'".format(
+                #                        required_headers[i], required_headers[i-1],
+                #                        found_headers[i]))
+                #        return invalid_reasons
                 return invalid_reasons
 
             def is_project(sub):
