@@ -90,7 +90,7 @@ requirements:
             def can_download(syn, sub):
                 project_id = sub['entityId']
                 try:
-                    perms = syn.getPermissions(project_id, 3380061)
+                    perms = syn.getPermissions(project_id, 3380061) # wellcomeprize
                     if "READ" not in perms and "DOWNLOAD" not in perms:
                         return False 
                 except synapseclient.exceptions.SynapseHTTPError as e:
@@ -106,7 +106,6 @@ requirements:
                 args = read_args()
                 syn = synapseclient.Synapse(configPath=args.synapse_config)
                 syn.login(silent = True)
-                update_status(syn, args.submission_id, args.status)
                 sub = syn.getSubmission(args.submission_id)
                 if can_download(syn, sub):
                     new_project = create_new_project(syn, sub)
